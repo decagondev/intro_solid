@@ -4,6 +4,7 @@ Single Responsibility Principle
 A class should have one and only one reason to change, 
 meaning that a class should have only one job.
 """
+import functools
 
 class Circle:
     """
@@ -37,7 +38,14 @@ class AreaCalculator:
             and returns the total sum of the areas
         """
         # logic to sum the areas of the shapes
-        pass
+        area = []
+        for shape in self.shapes:
+            if isinstance(shape, Circle):
+                area.append((3.142 * (shape.radius ** 2)))
+            elif isinstance(shape, Square):
+                area.append(shape.length ** 2)
+
+        return functools.reduce(lambda a,b : a + b, area)
 
     def __str__(self):
         """
@@ -48,4 +56,8 @@ class AreaCalculator:
 
 
 
-        
+shapes = [Circle(4), Square(5), Square(6)]
+
+areas = AreaCalculator(shapes)
+
+print(areas)
